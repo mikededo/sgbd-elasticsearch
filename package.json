@@ -1,0 +1,18 @@
+{
+    "name": "elastic-search-sgbd",
+    "version": "1.0.0",
+    "description": "Footbal scouting application built with ElasticSearch, MySQL & React",
+    "main": "index.js",
+    "scripts": {
+        "start:back": "echo \"Error: back-end application not set up to start && exit 1",
+        "start:front": "echo \"Error: front-end application not set up to start && exit 1",
+        "start": "echo \"Error: application not set up to start && exit 1"
+    },
+    "keywords": [
+        "ElasticSearch",
+        "MySQL",
+        "React"
+    ],
+    "author": "",
+    "license": "ISC"
+}
