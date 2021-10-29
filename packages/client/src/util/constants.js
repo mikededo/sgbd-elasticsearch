@@ -42,10 +42,10 @@ export const PLAYER_TRAITS = {
 };
 
 export const KEEPER_TRAITS = {
-  1: 'Air Balls',
-  2: 'Penalty Expert',
-  3: 'Power shoot',
-  4: 'Playmaker'
+  23: 'Air Balls',
+  24: 'Penalty Expert',
+  25: 'Power shoot',
+  26: 'Playmaker'
 };
 
 export const COLOR_LIST = ['#ff5f32', '#ff8e39', '#ffb750', '#ffdb75'];

@@ -1,3 +1,3 @@
-import FinderContent from './FinderContent';
+import Dashboard from './Dashboard';
 
-export default FinderContent;
+export default Dashboard;

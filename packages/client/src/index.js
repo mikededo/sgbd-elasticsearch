@@ -1,16 +1,29 @@
 import React from 'react';
 
-import { Layout, Typography } from 'antd';
+import { Button, Layout, Typography } from 'antd';
 
-import FinderContent from './components';
+import { UserOutlined } from '@ant-design/icons';
+
+import Dashboard from './components';
 
 const { Footer, Header, Content } = Layout;
 const { Title } = Typography;
 
 const App = () => (
   <Layout style={{ minHeight: '100vh' }}>
-    <Header>
-      <Title style={{ color: 'white' }}>FutBase</Title>
+    <Header
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#333333'
+      }}
+    >
+      <Title style={{ color: 'white', margin: 0 }} className="logo">
+        FutBase
+      </Title>
+
+      <Button style={{ borderRadius: '50%' }} icon={<UserOutlined />} />
     </Header>
 
     <Content
@@ -19,7 +32,7 @@ const App = () => (
         paddingBottom: 0
       }}
     >
-      <FinderContent />
+      <Dashboard />
     </Content>
 
     <Footer style={{ textAlign: 'center' }}>
