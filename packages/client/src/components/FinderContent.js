@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Space, Table, Typography } from 'antd';
+import { Button, Col, Row, Space, Table, Typography } from 'antd';
+import { FilterOutlined } from '@ant-design/icons';
 
 import { RoundedInput } from './common';
 import { COLUMNS, dataParser } from '../util';
@@ -24,7 +25,17 @@ const FinderContent = () => (
           Search for the talents of the upcoming generation!
         </Title>
 
-        <RoundedInput placeholder="Start searching players" size="large" />
+        <Row align="middle" gutter={32}>
+          <Col flex={1}>
+            <RoundedInput placeholder="Start searching players" size="large" />
+          </Col>
+
+          <Col>
+            <Button size="large" icon={<FilterOutlined />}>
+              Filters
+            </Button>
+          </Col>
+        </Row>
       </section>
 
       <section style={{ height: '100%' }}>
