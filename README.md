@@ -51,8 +51,18 @@ fs-elasticsearch     elasticsearch:7.14.1   2 minutes ago   Up 2 minutes
 ### Application
 
 The application is built with JavaScript, using the React framework. The API that holds the interaction with the application uses the ExpressJS framework. The database integration with ExpressJS it is possible using the `mysql` and `elasticsearch` packages.  
-This repository is built using the `workspaces` feature that comes with [`npm-cli`](https://docs.npmjs.com/cli/v7/using-npm/workspaces), therefore, the `npm` recommended version is `^7.0.0`. Using workspaces, the installed packages will be stored in the root `node_modules` folder and will be symlinked into the workspace which uses such module.  
-In order to install the required dependencies, run:
+This repository is built using the `workspaces` feature that comes with [`npm-cli`](https://docs.npmjs.com/cli/v7/using-npm/workspaces), therefore, the `npm` recommended version is `^7.0.0`. `npm` requires NodeJS. Using workspaces, the installed packages will be stored in the root `node_modules` folder and will be symlinked into the workspace which uses such module.  
+After installing NodeJS and `npm`, you can check their versions:
+
+```sh
+node -v
+16.10.0
+
+npm -v
+7.24.0
+```
+
+In order to run the project, you have to install the required dependencies from the root:
 
 ```sh
 npm install
