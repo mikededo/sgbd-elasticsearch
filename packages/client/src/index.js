@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { Button, Layout, Typography } from 'antd';
+import { Layout, Typography } from 'antd';
 
-import { UserOutlined } from '@ant-design/icons';
-
-import Dashboard from './components';
+import { Dashboard, HeaderProfile } from './components';
 
 const { Footer, Header, Content } = Layout;
 const { Title } = Typography;
@@ -23,7 +21,7 @@ const App = () => (
         FutBase
       </Title>
 
-      <Button style={{ borderRadius: '50%' }} icon={<UserOutlined />} />
+      <HeaderProfile />
     </Header>
 
     <Content

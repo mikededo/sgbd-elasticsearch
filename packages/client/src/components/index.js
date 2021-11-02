@@ -1,3 +1,4 @@
 import Dashboard from './Dashboard';
+import HeaderProfile from './HeaderProfile';
 
-export default Dashboard;
+export { Dashboard, HeaderProfile };
