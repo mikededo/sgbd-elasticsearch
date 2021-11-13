@@ -12,7 +12,7 @@ First, pull the latest images using the commands below in termial or using any d
 
 ```sh
 # elasticsearch image does not have a latest tag
-docker pull elasticsearch:7.4.1
+docker pull elasticsearch:7.14.1
 docker pull mysql
 ```
 
@@ -62,7 +62,7 @@ npm -v
 7.24.0
 ```
 
-In order to run the project, you have to install the required dependencies from the root:
+In order to run the project, you have to install the required dependencies from the root directory:
 
 ```sh
 npm install
@@ -90,8 +90,8 @@ In order to exclusively launch one of the applications, the commands to be used 
 
 ```sh
 # back-end
-npm run start:back
+npm run start:server
 
 # front-end
-npm run start:front
+npm run start:client
 ```

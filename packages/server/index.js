@@ -1,10 +1,8 @@
-import { Client } from '@elastic/elasticsearch';
 import express from 'express';
 
-const client = new Client({ node: 'http://localhost:9200' });
+import { ElasticClient } from './src';
 
-console.log(client);
-
+// Express API REST
 const app = express();
 const port = 3000;
 
@@ -24,5 +22,7 @@ app.post('/register', (req, res) => {
     const lastName = body.last_name;
     const email = body.email;
     const password = body.password;
-    res.send(`Name: ${name}. Last name: ${lastName}. Email: ${email}. Password: ${password}`);
+    res.send(
+        `Name: ${name}. Last name: ${lastName}. Email: ${email}. Password: ${password}`
+    );
 });
