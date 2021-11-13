@@ -34,6 +34,10 @@ docker run -p 3306:3306 \
     -d mysql
 ```
 
+> In order to reduce the amount of memory used by the containers, the prop `--memory` can be additionally passed when running the container.  
+> For example, limiting mysql to 1gb of memory:
+> `docker run --memory="1g" -d mysql`
+
 Check running containers with:
 
 ```sh
