@@ -1,22 +1,22 @@
-import Express from 'express';
+import express from 'express';
 import { ElasticClient } from '../databases';
 
-const Routes = Express.Router();
+const routes = express.Router();
 
-Routes.get('/', async (req, res) => {
+routes.get('/', async (req, res) => {
     const result = await ElasticClient.search({
         index: 'players',
         body: req.body
     });
-    res.send(result.body.hits.hits.map(x => x._source));
+    res.status(200).send(result.body.hits.hits.map(({ _source }) => _source));
 });
 
-Routes.get('/:id', async (req, res) => {
+routes.get('/:id', async (req, res) => {
     const result = await ElasticClient.search({
         index: 'players',
         body: { query: { match: { id: req.params.id } } }
     });
-    res.send(result.body.hits.hits[0]._source);
+    res.status(200).send(result.body.hits.hits[0]._source);
 });
 
-export default Routes;
+export default routes;

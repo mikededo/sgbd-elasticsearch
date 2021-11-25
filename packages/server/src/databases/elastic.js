@@ -1,6 +1,7 @@
-import { Client } from '@elastic/elasticsearch';
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
+
+import { Client } from '@elastic/elasticsearch';
 
 const elasticClient = new Client({ node: 'http://localhost:9200' });
 
@@ -67,18 +68,12 @@ const clearBulkErrors = (result, initial) => {
 
 // On elastic client init, check if data has to be inserted
 const initialize = async () => {
-    try {
-        await elasticClient.indices.delete({ index: 'players' });
-    } catch (e) {}
-
     const { body: exists } = await elasticClient.indices.exists({
         index: 'players'
     });
 
     if (!exists) {
-        console.log(
-            '[ELASTIC] 🟡 No players index found, initialising'
-        );
+        console.log('[ELASTIC] 🟡 No players index found, initialising');
 
         console.log('[ELASTIC] ℹ️  Creating elastic players index');
         await elasticClient.indices.create(PlayersIndexMapping);
