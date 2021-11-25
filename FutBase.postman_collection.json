@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"email\": \"admin@futbase.com\",\r\n\t\"password\": \"adminadmin\"\r\n}",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n\t\"email\": \"admin@futbase.com\",\r\n\t\"password\": \"adminadmin\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,13 +20,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/login",
+					"raw": "http://localhost:3000/user/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
+						"user",
 						"login"
 					]
 				}
@@ -40,7 +41,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Futbase\",\r\n    \"lastName\": \"Admin\",\r\n\t\"email\": \"admin@futbase.com\",\r\n\t\"password\": \"adminadmin\"\r\n}",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"name\": \"Futbase\",\r\n    \"lastName\": \"Admin\",\r\n\t\"email\": \"admin@futbase.com\",\r\n\t\"password\": \"adminadmin\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -48,13 +49,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/register",
+					"raw": "http://localhost:3000/user/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
+						"user",
 						"register"
 					]
 				}
@@ -68,7 +70,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 50\r\n}",
+					"raw": "{\r\n    \"playerId\": 50\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -76,7 +78,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/user/root/fav-players",
+					"raw": "http://localhost:3000/user/admin/fav-players",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -84,7 +86,7 @@
 					"port": "3000",
 					"path": [
 						"user",
-						"root",
+						"admin",
 						"fav-players"
 					]
 				}
@@ -98,7 +100,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 50\r\n}",
+					"raw": "{\r\n    \"playerId\": 50\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -106,7 +108,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/user/root/fav-players",
+					"raw": "http://localhost:3000/user/admin/fav-players",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -114,7 +116,7 @@
 					"port": "3000",
 					"path": [
 						"user",
-						"root",
+						"admin",
 						"fav-players"
 					]
 				}
@@ -127,7 +129,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/user/root/fav-players",
+					"raw": "http://localhost:3000/user/admin/fav-players",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -135,7 +137,7 @@
 					"port": "3000",
 					"path": [
 						"user",
-						"root",
+						"admin",
 						"fav-players"
 					]
 				}
@@ -164,9 +166,21 @@
 		},
 		{
 			"name": "Search Players",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:3000/players",
 					"protocol": "http",

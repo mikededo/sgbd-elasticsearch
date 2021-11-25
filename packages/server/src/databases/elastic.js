@@ -66,7 +66,7 @@ const clearBulkErrors = (result, initial) => {
 };
 
 // On elastic client init, check if data has to be inserted
-const init = async () => {
+const initialize = async () => {
     try {
         await elasticClient.indices.delete({ index: 'players' });
     } catch (e) {}
@@ -148,6 +148,6 @@ const init = async () => {
     }
 };
 
-init();
+initialize();
 
 export default elasticClient;

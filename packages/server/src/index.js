@@ -1,3 +1,4 @@
-import ElasticClient from './elastic';
+import { App } from './express';
+import { userRoutes, playersRoutes } from './routes';
 
-export { ElasticClient };
+export { App, userRoutes, playersRoutes };
