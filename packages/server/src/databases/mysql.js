@@ -1,41 +1,44 @@
 import Client from 'mysql';
-import mysqlSetup from './mysqlSetup';
+import { connectionParams, database, queries } from './constants';
 
-const MysqlCon = Client.createConnection(mysqlSetup.connectionParams);
+const connection = Client.createConnection(connectionParams);
 
 const createDatabase = () =>
-    MysqlCon.query(
-        mysqlSetup.queries.alterRootUser +
-            mysqlSetup.queries.createDatabase +
-            mysqlSetup.queries.useDatabase +
-            mysqlSetup.queries.createUsersTable +
-            mysqlSetup.queries.createFavouritePlayersTable +
-            mysqlSetup.queries.insertAdminUser,
+    connection.query(
+        [
+            queries.createDatabase,
+            queries.useDatabase,
+            queries.createUsersTable,
+            queries.createFavouritePlayersTable,
+            queries.insertAdminUser
+        ].join(''),
         (err) => {
-            if (err) throw err;
+            if (err) {
+                throw err;
+            }
+
             console.log(
-                `[MYSQL] Database ${mysqlSetup.databaseDesc.name} created successfully`
+                `[MYSQL] Database ${database.name} created successfully`
             );
         }
     );
 
 const checkDatabase = () =>
     new Promise((resolve, reject) =>
-        MysqlCon.query(mysqlSetup.queries.showTables, (err, result) => {
-            if (err) reject(err);
-            else if (
+        connection.query(queries.showTables, (err, result) => {
+            if (err) {
+                reject(err);
+            } else if (
                 result.length !== 2 ||
-                result.every(
-                    (x, i) => x.TABLE_NAME === mysqlSetup.databaseDesc.tables[i]
-                )
+                result.every((x, i) => x.TABLE_NAME === database.tables[i])
             ) {
                 console.log(
-                    `[MYSQL] Database ${mysqlSetup.databaseDesc.name} format is not correct`
+                    `[MYSQL] Database ${database.name} format is not correct`
                 );
                 resolve(false);
             } else {
                 console.log(
-                    `[MYSQL] Database ${mysqlSetup.databaseDesc.name} checked successfully`
+                    `[MYSQL] Database ${database.name} checked successfully`
                 );
                 resolve(true);
             }
@@ -43,42 +46,47 @@ const checkDatabase = () =>
     );
 
 const dropAndCreateDatabase = () =>
-    MysqlCon.query(
-        mysqlSetup.queries.dropDatabase +
-            mysqlSetup.queries.alterRootUser +
-            mysqlSetup.queries.createDatabase +
-            mysqlSetup.queries.useDatabase +
-            mysqlSetup.queries.createUsersTable +
-            mysqlSetup.queries.createFavouritePlayersTable +
-            mysqlSetup.queries.insertAdminUser,
+    connection.query(
+        [
+            queries.dropDatabase,
+            queries.createDatabase,
+            queries.useDatabase,
+            queries.createUsersTable,
+            queries.createFavouritePlayersTable,
+            queries.insertAdminUser
+        ].join(),
         (err) => {
-            if (err) throw err;
+            if (err) {
+                throw err;
+            }
+
             console.log(
                 '[MYSQL] Database',
-                mysqlSetup.databaseDesc.name,
+                database.name,
                 'dropped and created successfully'
             );
         }
     );
 
 const selectDatabaseAndInsertAdminUser = () =>
-    MysqlCon.query(
-        mysqlSetup.queries.useDatabase + mysqlSetup.queries.insertAdminUser,
-        (err) => {
-            if (err) throw err;
-            console.log(
-                `[MYSQL] Database ${mysqlSetup.databaseDesc.name} selected`
-            );
+    connection.query(queries.useDatabase + queries.insertAdminUser, (err) => {
+        if (err) {
+            throw err;
         }
-    );
+
+        console.log(`[MYSQL] Database ${database.name} selected`);
+    });
 
 const getSchema = () =>
     new Promise((resolve, reject) =>
-        MysqlCon.query(
+        connection.query(
             'SELECT schema_name FROM SCHEMATA WHERE schema_name = ?',
-            mysqlSetup.databaseDesc.name,
+            database.name,
             (err, result) => {
-                if (err) reject(err);
+                if (err) {
+                    reject(err);
+                }
+
                 resolve(result);
             }
         )
@@ -86,18 +94,25 @@ const getSchema = () =>
 
 const initialize = async () => {
     try {
-        MysqlCon.connect((err) => {
-            if (err) throw err;
+        connection.connect((err) => {
+            if (err) {
+                throw err;
+            }
+
             console.log('[MYSQL] Connection to MySQL database established');
         });
 
         getSchema()
-            .then(async (schemas) => {
-                if (schemas.length !== 1) await createDatabase();
-                else {
-                    checkDatabase().then(async (check) => {
-                        if (!check) await dropAndCreateDatabase();
-                        else await selectDatabaseAndInsertAdminUser();
+            .then((schemas) => {
+                if (schemas.length !== 1) {
+                    createDatabase();
+                } else {
+                    checkDatabase().then((check) => {
+                        if (!check) {
+                            dropAndCreateDatabase();
+                        } else {
+                            selectDatabaseAndInsertAdminUser();
+                        }
                     });
                 }
             })
@@ -111,4 +126,4 @@ const initialize = async () => {
 
 initialize();
 
-export default MysqlCon;
+export default connection;

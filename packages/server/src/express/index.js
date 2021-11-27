@@ -1,3 +1,3 @@
-import App from './express';
+import app from './express';
 
-export { App };
+export default app;

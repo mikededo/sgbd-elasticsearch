@@ -1,5 +1,4 @@
-import { App, userRoutes, playersRoutes } from './src';
+import { app, userRoutes, playersRoutes } from './src';
 
-App.use('/user', userRoutes);
-
-App.use('/players', playersRoutes);
+app.use('/user', userRoutes);
+app.use('/players', playersRoutes);

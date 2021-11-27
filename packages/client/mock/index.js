@@ -2,7 +2,7 @@
 export const MOCK_DATA = [
   {
     id: 1,
-    firstName: 'Porter',
+    first_name: 'Porter',
     lastName: 'Mapam',
     fullName: 'Porter Mapam',
     height: 1.85,
@@ -18,7 +18,7 @@ export const MOCK_DATA = [
   },
   {
     id: 2,
-    firstName: 'Corbin',
+    first_name: 'Corbin',
     lastName: 'Widger',
     fullName: 'Corbin Widger',
     height: 1.94,
@@ -34,7 +34,7 @@ export const MOCK_DATA = [
   },
   {
     id: 3,
-    firstName: 'Hamlen',
+    first_name: 'Hamlen',
     lastName: 'Brounsell',
     fullName: 'Hamlen Brounsell',
     height: 1.93,
@@ -50,7 +50,7 @@ export const MOCK_DATA = [
   },
   {
     id: 4,
-    firstName: 'Winston',
+    first_name: 'Winston',
     lastName: 'Burborough',
     fullName: 'Winston Burborough',
     height: 1.67,
@@ -66,7 +66,7 @@ export const MOCK_DATA = [
   },
   {
     id: 5,
-    firstName: 'Alexandro',
+    first_name: 'Alexandro',
     lastName: 'Degan',
     fullName: 'Alexandro Degan',
     height: 1.93,
@@ -82,7 +82,7 @@ export const MOCK_DATA = [
   },
   {
     id: 6,
-    firstName: 'Peyton',
+    first_name: 'Peyton',
     lastName: 'Pinchin',
     fullName: 'Peyton Pinchin',
     height: 1.86,
@@ -98,7 +98,7 @@ export const MOCK_DATA = [
   },
   {
     id: 7,
-    firstName: 'Leonerd',
+    first_name: 'Leonerd',
     lastName: 'Perez',
     fullName: 'Leonerd Perez',
     height: 1.84,
@@ -114,7 +114,7 @@ export const MOCK_DATA = [
   },
   {
     id: 8,
-    firstName: 'Elden',
+    first_name: 'Elden',
     lastName: 'Scardafield',
     fullName: 'Elden Scardafield',
     height: 1.67,
@@ -130,7 +130,7 @@ export const MOCK_DATA = [
   },
   {
     id: 9,
-    firstName: 'Sal',
+    first_name: 'Sal',
     lastName: 'Capper',
     fullName: 'Sal Capper',
     height: 1.94,
@@ -146,7 +146,7 @@ export const MOCK_DATA = [
   },
   {
     id: 10,
-    firstName: 'Derick',
+    first_name: 'Derick',
     lastName: 'Champerlen',
     fullName: 'Derick Champerlen',
     height: 1.71,
@@ -162,7 +162,7 @@ export const MOCK_DATA = [
   },
   {
     id: 11,
-    firstName: 'Thorny',
+    first_name: 'Thorny',
     lastName: 'Cosgry',
     fullName: 'Thorny Cosgry',
     height: 1.81,
@@ -178,7 +178,7 @@ export const MOCK_DATA = [
   },
   {
     id: 12,
-    firstName: 'Rudolfo',
+    first_name: 'Rudolfo',
     lastName: 'Frean',
     fullName: 'Rudolfo Frean',
     height: 1.99,
@@ -194,7 +194,7 @@ export const MOCK_DATA = [
   },
   {
     id: 13,
-    firstName: 'Erick',
+    first_name: 'Erick',
     lastName: 'Bauer',
     fullName: 'Erick Bauer',
     height: 1.93,
@@ -210,7 +210,7 @@ export const MOCK_DATA = [
   },
   {
     id: 14,
-    firstName: 'Ewan',
+    first_name: 'Ewan',
     lastName: 'Ayliffe',
     fullName: 'Ewan Ayliffe',
     height: 1.85,
@@ -226,7 +226,7 @@ export const MOCK_DATA = [
   },
   {
     id: 15,
-    firstName: 'Arri',
+    first_name: 'Arri',
     lastName: 'Leiden',
     fullName: 'Arri Leiden',
     height: 1.99,
@@ -242,7 +242,7 @@ export const MOCK_DATA = [
   },
   {
     id: 16,
-    firstName: 'Lazarus',
+    first_name: 'Lazarus',
     lastName: 'Senecaut',
     fullName: 'Lazarus Senecaut',
     height: 1.67,
@@ -258,7 +258,7 @@ export const MOCK_DATA = [
   },
   {
     id: 17,
-    firstName: 'Ty',
+    first_name: 'Ty',
     lastName: 'Upshall',
     fullName: 'Ty Upshall',
     height: 2.0,
@@ -274,7 +274,7 @@ export const MOCK_DATA = [
   },
   {
     id: 18,
-    firstName: 'Webster',
+    first_name: 'Webster',
     lastName: 'Semaine',
     fullName: 'Webster Semaine',
     height: 1.91,
@@ -290,7 +290,7 @@ export const MOCK_DATA = [
   },
   {
     id: 19,
-    firstName: 'Land',
+    first_name: 'Land',
     lastName: 'Gussie',
     fullName: 'Land Gussie',
     height: 1.95,
@@ -306,7 +306,7 @@ export const MOCK_DATA = [
   },
   {
     id: 20,
-    firstName: 'Sherm',
+    first_name: 'Sherm',
     lastName: 'Grayston',
     fullName: 'Sherm Grayston',
     height: 1.94,
@@ -322,7 +322,7 @@ export const MOCK_DATA = [
   },
   {
     id: 21,
-    firstName: 'Heywood',
+    first_name: 'Heywood',
     lastName: 'Dance',
     fullName: 'Heywood Dance',
     height: 1.86,
@@ -338,7 +338,7 @@ export const MOCK_DATA = [
   },
   {
     id: 22,
-    firstName: 'Bail',
+    first_name: 'Bail',
     lastName: 'Rambadt',
     fullName: 'Bail Rambadt',
     height: 1.66,
@@ -354,7 +354,7 @@ export const MOCK_DATA = [
   },
   {
     id: 23,
-    firstName: 'Bayard',
+    first_name: 'Bayard',
     lastName: 'Durgan',
     fullName: 'Bayard Durgan',
     height: 1.82,
@@ -370,7 +370,7 @@ export const MOCK_DATA = [
   },
   {
     id: 24,
-    firstName: 'Tymon',
+    first_name: 'Tymon',
     lastName: 'Polglase',
     fullName: 'Tymon Polglase',
     height: 2.01,
@@ -386,7 +386,7 @@ export const MOCK_DATA = [
   },
   {
     id: 25,
-    firstName: 'Trumaine',
+    first_name: 'Trumaine',
     lastName: 'Verne',
     fullName: 'Trumaine Verne',
     height: 1.86,
@@ -402,7 +402,7 @@ export const MOCK_DATA = [
   },
   {
     id: 26,
-    firstName: 'Yorgos',
+    first_name: 'Yorgos',
     lastName: 'Castillou',
     fullName: 'Yorgos Castillou',
     height: 1.94,
@@ -418,7 +418,7 @@ export const MOCK_DATA = [
   },
   {
     id: 27,
-    firstName: 'Jedd',
+    first_name: 'Jedd',
     lastName: 'Foro',
     fullName: 'Jedd Foro',
     height: 1.91,
@@ -434,7 +434,7 @@ export const MOCK_DATA = [
   },
   {
     id: 28,
-    firstName: 'Garrik',
+    first_name: 'Garrik',
     lastName: 'Pelman',
     fullName: 'Garrik Pelman',
     height: 1.78,
@@ -450,7 +450,7 @@ export const MOCK_DATA = [
   },
   {
     id: 29,
-    firstName: 'Peterus',
+    first_name: 'Peterus',
     lastName: 'Works',
     fullName: 'Peterus Works',
     height: 2.0,
@@ -466,7 +466,7 @@ export const MOCK_DATA = [
   },
   {
     id: 30,
-    firstName: 'Baxy',
+    first_name: 'Baxy',
     lastName: 'Eggers',
     fullName: 'Baxy Eggers',
     height: 1.65,
@@ -482,7 +482,7 @@ export const MOCK_DATA = [
   },
   {
     id: 31,
-    firstName: 'Cece',
+    first_name: 'Cece',
     lastName: 'McKinlay',
     fullName: 'Cece McKinlay',
     height: 1.9,
@@ -498,7 +498,7 @@ export const MOCK_DATA = [
   },
   {
     id: 32,
-    firstName: 'Wade',
+    first_name: 'Wade',
     lastName: "D'Abbot-Doyle",
     fullName: "Wade D'Abbot-Doyle",
     height: 1.63,
@@ -514,7 +514,7 @@ export const MOCK_DATA = [
   },
   {
     id: 33,
-    firstName: 'Tobias',
+    first_name: 'Tobias',
     lastName: 'Petrello',
     fullName: 'Tobias Petrello',
     height: 1.89,
@@ -530,7 +530,7 @@ export const MOCK_DATA = [
   },
   {
     id: 34,
-    firstName: 'Alisander',
+    first_name: 'Alisander',
     lastName: 'Armatage',
     fullName: 'Alisander Armatage',
     height: 1.65,
@@ -546,7 +546,7 @@ export const MOCK_DATA = [
   },
   {
     id: 35,
-    firstName: 'Roscoe',
+    first_name: 'Roscoe',
     lastName: 'Collinette',
     fullName: 'Roscoe Collinette',
     height: 1.89,
@@ -562,7 +562,7 @@ export const MOCK_DATA = [
   },
   {
     id: 36,
-    firstName: 'Bram',
+    first_name: 'Bram',
     lastName: 'Lesek',
     fullName: 'Bram Lesek',
     height: 1.9,
@@ -578,7 +578,7 @@ export const MOCK_DATA = [
   },
   {
     id: 37,
-    firstName: 'Gay',
+    first_name: 'Gay',
     lastName: 'Moizer',
     fullName: 'Gay Moizer',
     height: 1.8,
@@ -594,7 +594,7 @@ export const MOCK_DATA = [
   },
   {
     id: 38,
-    firstName: 'Any',
+    first_name: 'Any',
     lastName: 'Ing',
     fullName: 'Any Ing',
     height: 1.86,
@@ -610,7 +610,7 @@ export const MOCK_DATA = [
   },
   {
     id: 39,
-    firstName: 'Terrence',
+    first_name: 'Terrence',
     lastName: 'Gores',
     fullName: 'Terrence Gores',
     height: 1.74,
@@ -626,7 +626,7 @@ export const MOCK_DATA = [
   },
   {
     id: 40,
-    firstName: 'Mikel',
+    first_name: 'Mikel',
     lastName: 'Frier',
     fullName: 'Mikel Frier',
     height: 1.72,
@@ -642,7 +642,7 @@ export const MOCK_DATA = [
   },
   {
     id: 41,
-    firstName: 'Ezri',
+    first_name: 'Ezri',
     lastName: 'Lassey',
     fullName: 'Ezri Lassey',
     height: 1.88,
@@ -658,7 +658,7 @@ export const MOCK_DATA = [
   },
   {
     id: 42,
-    firstName: 'Mervin',
+    first_name: 'Mervin',
     lastName: 'Strutton',
     fullName: 'Mervin Strutton',
     height: 1.8,
@@ -674,7 +674,7 @@ export const MOCK_DATA = [
   },
   {
     id: 43,
-    firstName: 'Yanaton',
+    first_name: 'Yanaton',
     lastName: 'Dewitt',
     fullName: 'Yanaton Dewitt',
     height: 1.94,
@@ -690,7 +690,7 @@ export const MOCK_DATA = [
   },
   {
     id: 44,
-    firstName: 'Saul',
+    first_name: 'Saul',
     lastName: 'Loren',
     fullName: 'Saul Loren',
     height: 1.83,
@@ -706,7 +706,7 @@ export const MOCK_DATA = [
   },
   {
     id: 45,
-    firstName: 'Keary',
+    first_name: 'Keary',
     lastName: 'Dowbakin',
     fullName: 'Keary Dowbakin',
     height: 1.63,
@@ -722,7 +722,7 @@ export const MOCK_DATA = [
   },
   {
     id: 46,
-    firstName: 'Sergei',
+    first_name: 'Sergei',
     lastName: 'Bradtke',
     fullName: 'Sergei Bradtke',
     height: 1.7,
@@ -738,7 +738,7 @@ export const MOCK_DATA = [
   },
   {
     id: 47,
-    firstName: 'Abner',
+    first_name: 'Abner',
     lastName: 'Fliege',
     fullName: 'Abner Fliege',
     height: 1.95,
@@ -754,7 +754,7 @@ export const MOCK_DATA = [
   },
   {
     id: 48,
-    firstName: 'Ciro',
+    first_name: 'Ciro',
     lastName: 'Hallbird',
     fullName: 'Ciro Hallbird',
     height: 1.86,
@@ -770,7 +770,7 @@ export const MOCK_DATA = [
   },
   {
     id: 49,
-    firstName: 'Adolphus',
+    first_name: 'Adolphus',
     lastName: 'Ovanesian',
     fullName: 'Adolphus Ovanesian',
     height: 1.93,
@@ -786,7 +786,7 @@ export const MOCK_DATA = [
   },
   {
     id: 50,
-    firstName: 'Gregoor',
+    first_name: 'Gregoor',
     lastName: 'Dalley',
     fullName: 'Gregoor Dalley',
     height: 1.62,

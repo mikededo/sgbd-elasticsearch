@@ -25,11 +25,12 @@ const PlayersIndexMapping = {
                     type: 'text',
                     fields: { key: { type: 'keyword' } }
                 },
+                position: { type: 'keyword' },
                 strongFoot: { type: 'text' },
-                firstStrongFoot: { type: 'keyword' },
-                secondStrongFoot: { type: 'keyword' },
-                thirdStrongFoot: { type: 'keyword' },
-                fourthStrongFoot: { type: 'keyword' }
+                firstStrongPoint: { type: 'keyword' },
+                secondStrongPoint: { type: 'keyword' },
+                thirdStrongPoint: { type: 'keyword' },
+                fourthStrongPoint: { type: 'keyword' }
             }
         }
     }

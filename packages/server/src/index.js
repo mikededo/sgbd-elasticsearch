@@ -1,4 +1,4 @@
-import { App } from './express';
+import app from './express';
 import { userRoutes, playersRoutes } from './routes';
 
-export { App, userRoutes, playersRoutes };
+export { app, userRoutes, playersRoutes };

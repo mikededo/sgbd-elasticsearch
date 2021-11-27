@@ -1,0 +1,48 @@
+version: "2.4"
+
+services:
+  # Mysql database
+  mysql: 
+    container_name: fs-mysql
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+    mem_limit: 500M
+
+  # Elastic database
+  elasticsearch:
+    container_name: fs-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    environment:
+      - xpack.security.enabled=false
+      - "discovery.type=single-node"
+    networks:
+      - fs-net
+    restart: unless-stopped
+    ports:
+      - 9200:9200
+      - 9300:9300
+    mem_limit: 500M
+
+  # Kibana management
+  kibana:
+    container_name: fs-kibana
+    image: docker.elastic.co/kibana/kibana:7.15.2
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    networks:
+      - fs-net
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+    restart: unless-stopped
+    mem_limit: 500M
+
+# Network between elastic and kibana
+networks:
+  fs-net:
+    driver: bridge

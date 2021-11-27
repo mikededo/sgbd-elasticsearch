@@ -1,4 +1,4 @@
 import ElasticClient from './elastic';
-import MysqlCon from './mysql';
+import connection from './mysql';
 
-export { ElasticClient, MysqlCon };
+export { ElasticClient, connection as MysqlCon };
