@@ -19,6 +19,7 @@ module.exports = {
     static: path.join(__dirname, 'src'),
     historyApiFallback: true,
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {

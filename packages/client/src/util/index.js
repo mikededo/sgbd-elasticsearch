@@ -7,8 +7,11 @@ import {
   POSITIONS
 } from './constants';
 import { dataParser } from './functions';
+import AppContext, { useAppContext } from './context';
 
 export {
+  AppContext,
+  useAppContext,
   COLOR_LIST,
   COLUMNS,
   COUNTRY_FLAGS,

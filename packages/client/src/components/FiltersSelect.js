@@ -29,7 +29,7 @@ FiltersSelect.propTypes = {
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   tagRender: PropTypes.func,
-  values: PropTypes.arrayOf(PropTypes.string).isRequired,
+  values: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
   onChange: PropTypes.func
 };
 

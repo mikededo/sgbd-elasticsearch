@@ -1,24 +1,42 @@
 import React, { useState } from 'react';
 
-import { Button, Popover } from 'antd';
+import { Button, Popover, Typography } from 'antd';
 
 import { UserOutlined } from '@ant-design/icons';
 
 import ProfilePopoverContent from './ProfilePopoverContent';
+import { useAppContext } from '../util';
 
 const HeaderProfile = () => {
-  const [active, setActive] = useState(true);
+  const { user } = useAppContext();
+
+  const [active, setActive] = useState(false);
 
   return (
-    <Popover
-      trigger="click"
-      visible={active}
-      onVisibleChange={() => setActive((prev) => !prev)}
-      content={<ProfilePopoverContent />}
-      placement="bottomRight"
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+      }}
     >
-      <Button style={{ borderRadius: '50%' }} icon={<UserOutlined />} />
-    </Popover>
+      {user && (
+        <Typography.Text style={{ color: 'white', marginRight: '8px' }}>
+          {user.firstName} {user.lastName}
+        </Typography.Text>
+      )}
+
+      <Popover
+        trigger="click"
+        visible={active}
+        onVisibleChange={() => setActive((prev) => !prev)}
+        content={<ProfilePopoverContent />}
+        overlayStyle={{ padding: user ? '0' : undefined }}
+        placement="bottomRight"
+      >
+        <Button style={{ borderRadius: '50%' }} icon={<UserOutlined />} />
+      </Popover>
+    </div>
   );
 };
 
