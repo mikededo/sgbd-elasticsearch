@@ -19,34 +19,36 @@ export const queries = {
         database.name,
         '";'
     ].join(''),
-    createDatabase: `CREATE DATABASE IF NOT EXISTS ${database.name}; `,
+    createDatabase: `CREATE DATABASE IF NOT EXISTS ${database.name};`,
     dropDatabase: `DROP DATABASE IF EXISTS ${database.name};`,
     useDatabase: `USE ${database.name}; `,
     createUsersTable: [
         'CREATE TABLE IF NOT EXISTS ',
         database.tables[0],
         ' (',
-        'username VARCHAR(30) NOT NULL, ',
-        'name VARCHAR(30) NOT NULL, ',
-        'lastName VARCHAR(30) NULL DEFAULT NULL, ',
-        'email VARCHAR(40) NOT NULL, ',
-        'password VARCHAR(30) NOT NULL, ',
-        'PRIMARY KEY (username));'
-    ].join(''),
+        'id MEDIUMINT NOT NULL AUTO_INCREMENT,',
+        'name VARCHAR(30) NOT NULL,',
+        'lastName VARCHAR(30) NULL DEFAULT NULL,',
+        'email VARCHAR(40) NOT NULL,',
+        'password VARCHAR(255) NOT NULL,',
+        'PRIMARY KEY (id));'
+    ].join(' '),
+    createUsersIndex: `CREATE UNIQUE INDEX user_email ON ${database.tables[0]} (email);`,
     createFavouritePlayersTable: [
-        'CREATE TABLE IF NOT EXISTS ',
+        'CREATE TABLE IF NOT EXISTS',
         database.tables[1],
-        ' (',
-        'username VARCHAR(30) NOT NULL, ',
-        'playerId MEDIUMINT NOT NULL, ',
-        'PRIMARY KEY (username, playerId), ',
-        'CONSTRAINT fk_favouritePlayers_user ',
-        'FOREIGN KEY (username)',
-        'REFERENCES users (username)); '
-    ].join(''),
+        '(',
+        'userId MEDIUMINT NOT NULL,',
+        'playerId MEDIUMINT NOT NULL,',
+        'PRIMARY KEY (userId, playerId),',
+        'CONSTRAINT fk_favouritePlayers_user',
+        'FOREIGN KEY (userId)',
+        'REFERENCES users (id));'
+    ].join(' '),
     insertAdminUser: [
-        'INSERT INTO ',
+        'INSERT INTO',
         database.tables[0],
-        ' VALUES ("admin", "Futbase", "Admin", "admin@futbase.com", "adminadmin") ON DUPLICATE KEY UPDATE username = "admin"; '
-    ].join('')
+        '(name, lastName, email, password)',
+        'VALUES ( "Futbase", "Admin", "admin@futbase.com", "adminadmin") ON DUPLICATE KEY UPDATE username = "admin"; '
+    ].join(' ')
 };

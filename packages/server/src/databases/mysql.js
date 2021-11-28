@@ -1,4 +1,5 @@
 import Client from 'mysql';
+
 import { connectionParams, database, queries } from './constants';
 
 const connection = Client.createConnection(connectionParams);
@@ -9,6 +10,7 @@ const createDatabase = () =>
             queries.createDatabase,
             queries.useDatabase,
             queries.createUsersTable,
+            queries.createUsersIndex,
             queries.createFavouritePlayersTable,
             queries.insertAdminUser
         ].join(''),
@@ -18,7 +20,7 @@ const createDatabase = () =>
             }
 
             console.log(
-                `[MYSQL] Database ${database.name} created successfully`
+                `[MYSQL] ℹ️ Database ${database.name} created successfully`
             );
         }
     );
@@ -33,12 +35,12 @@ const checkDatabase = () =>
                 result.every((x, i) => x.TABLE_NAME === database.tables[i])
             ) {
                 console.log(
-                    `[MYSQL] Database ${database.name} format is not correct`
+                    `[MYSQL] 🔴 Database ${database.name} format is not correct`
                 );
                 resolve(false);
             } else {
                 console.log(
-                    `[MYSQL] Database ${database.name} checked successfully`
+                    `[MYSQL] ℹ️  Database ${database.name} checked successfully`
                 );
                 resolve(true);
             }
@@ -52,29 +54,28 @@ const dropAndCreateDatabase = () =>
             queries.createDatabase,
             queries.useDatabase,
             queries.createUsersTable,
+            queries.createUsersIndex,
             queries.createFavouritePlayersTable,
             queries.insertAdminUser
-        ].join(),
+        ].join(''),
         (err) => {
             if (err) {
                 throw err;
             }
 
             console.log(
-                '[MYSQL] Database',
-                database.name,
-                'dropped and created successfully'
+                `[MYSQL] ℹ️  Database ${database.name} dropped and created successfully`
             );
         }
     );
 
 const selectDatabaseAndInsertAdminUser = () =>
-    connection.query(queries.useDatabase + queries.insertAdminUser, (err) => {
+    connection.query(queries.useDatabase, (err) => {
         if (err) {
             throw err;
         }
 
-        console.log(`[MYSQL] Database ${database.name} selected`);
+        console.log(`[MYSQL] ℹ️  Database ${database.name} selected`);
     });
 
 const getSchema = () =>
@@ -92,17 +93,17 @@ const getSchema = () =>
         )
     );
 
-const initialize = async () => {
+const initialize = () => {
     try {
         connection.connect((err) => {
             if (err) {
                 throw err;
             }
 
-            console.log('[MYSQL] Connection to MySQL database established');
+            console.log('[MYSQL] 🟢 Connection to MySQL database established');
         });
 
-        getSchema()
+        return getSchema()
             .then((schemas) => {
                 if (schemas.length !== 1) {
                     createDatabase();
@@ -120,10 +121,9 @@ const initialize = async () => {
                 throw err;
             });
     } catch ({ message: msg }) {
-        console.error('[MYSQL]', msg);
+        console.error('[MYSQL] 🔴 ', msg);
     }
 };
 
-initialize();
-
 export default connection;
+export { initialize };

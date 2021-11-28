@@ -1,4 +1,5 @@
-import app from './express';
-import { userRoutes, playersRoutes } from './routes';
+import { initialize as initElastic } from './databases/elastic';
+import { initialize as initMysql } from './databases/mysql';
+import { playersRoutes, userRoutes } from './routes';
 
-export { app, userRoutes, playersRoutes };
+export { initElastic, initMysql, playersRoutes, userRoutes };

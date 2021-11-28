@@ -133,17 +133,16 @@ const initialize = async () => {
             }
         }
     } else {
-        console.log('[ELASTIC] 🟡  players index found, initialising');
+        console.log('[ELASTIC] 🟡 players index found');
 
         const { body } = await elasticClient.search({
             index: 'players'
         });
         console.log(
-            `[ELASTIC] A total of ${body.hits.total.value} players has been found in the database.`
+            `[ELASTIC] ℹ️  A total of ${body.hits.total.value} players has been found in the database.`
         );
     }
 };
 
-initialize();
-
 export default elasticClient;
+export { initialize };

@@ -1,4 +1,23 @@
-import { app, userRoutes, playersRoutes } from './src';
+import bodyParser from 'body-parser';
+import express from 'express';
 
-app.use('/user', userRoutes);
-app.use('/players', playersRoutes);
+import { initElastic, initMysql, playersRoutes, userRoutes } from './src';
+
+const App = express();
+
+Promise.all([initElastic(), initMysql()]).then(() => {
+    console.log('[EXPRESS] Databses initialised');
+
+    App.set('port', process.env.PORT || 3000);
+    App.listen(App.get('port'), () =>
+        console.log('[EXPRESS] Server listening on port', App.get('port'))
+    );
+
+    App.use(bodyParser.urlencoded({ extended: false }));
+    App.use(bodyParser.json());
+
+    App.use('/user', userRoutes);
+    App.use('/players', playersRoutes);
+});
+
+export default App;

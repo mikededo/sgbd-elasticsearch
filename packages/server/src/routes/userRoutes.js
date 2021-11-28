@@ -1,33 +1,109 @@
 import express from 'express';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
 import { ElasticClient, MysqlCon } from '../databases';
+import { jwtAuthCall } from '../middlewares';
 
 const routes = express.Router();
 
-routes.post('/login', (req, res) => {
-    const body = req.body;
-    const username = body.username;
-    const email = body.email;
-    const password = body.password;
-    res.send(`Username: ${username}. Email: ${email}. Password: ${password}`);
-});
+// HELPERS
+const getJWT = (email, password) =>
+    jwt.sign(
+        {
+            email,
+            password,
+            until: new Date().getTime() + 86400000
+        },
+        'super-secret-word'
+    );
 
-routes.post('/register', (req, res) => {
-    const body = req.body;
-    const username = body.username;
-    const name = body.name;
-    const lastName = body.lastName;
-    const email = body.email;
-    const password = body.password;
-    res.send(
-        `Username: ${username}. Name: ${name}. Last name: ${lastName}. Email: ${email}. Password: ${password}`
+routes.post('/login', (req, res) => {
+    const { body } = req;
+
+    if (!body.email || !body.password) {
+        res.status(400).send(
+            'Body must have { email: string, password: string }'
+        );
+        return;
+    }
+
+    MysqlCon.query(
+        'SELECT * FROM users WHERE email = ?',
+        body.email,
+        (err, result) => {
+            if (err) {
+                console.log(`[MYSQL] Error during login ${err}`);
+                res.status(400).send(err);
+                return;
+            }
+
+            const user = result[0];
+
+            if (bcrypt.compareSync(body.password, user.password)) {
+                res.status(200).send({
+                    user: user,
+                    token: getJWT(user.email, user.password)
+                });
+            } else {
+                res.status(404).send('Incorrect credentials');
+            }
+        }
     );
 });
 
-routes.get('/:username/fav-players', async (req, res) => {
+routes.post('/register', (req, res) => {
+    const { body } = req;
+
+    if (!body.password || !body.email) {
+        res.status(400).send(
+            'Body must include { email: string, password: string }'
+        );
+        return;
+    }
+
+    MysqlCon.query(
+        'INSERT INTO users (name, lastName, email, password) VALUES (?, ?, ?, ?)',
+        [
+            body.name,
+            body.lastName,
+            body.email,
+            bcrypt.hashSync(body.password, bcrypt.genSaltSync(10))
+        ],
+        (err, result) => {
+            if (err) {
+                console.log(`[MYSQL] 🔴 Error during register -> ${err}`);
+                res.status(400).send(err);
+                return;
+            }
+
+            MysqlCon.query(
+                'SELECT * FROM users WHERE id = ?',
+                result.insertId,
+                (err, user) => {
+                    console.log(user);
+
+                    if (err) {
+                        res.status(500);
+                        return;
+                    }
+
+                    // Send user with the token
+                    res.status(201).send({
+                        user: user[0],
+                        token: getJWT(user[0].email, user[0].password)
+                    });
+                }
+            );
+        }
+    );
+});
+
+routes.get('/:id/fav-players', jwtAuthCall, (req, res) => {
     try {
         MysqlCon.query(
-            'SELECT playerId FROM favouritePlayers WHERE username = ?',
-            req.params.username,
+            'SELECT playerId FROM favouritePlayers WHERE userId = ?',
+            +req.params.id,
             async (err, result) => {
                 if (err) throw err;
 
@@ -55,17 +131,17 @@ routes.get('/:username/fav-players', async (req, res) => {
     }
 });
 
-routes.post('/:username/fav-players', async (req, res) => {
+routes.post('/:id/fav-players/:playerId', jwtAuthCall, (req, res) => {
     try {
         MysqlCon.query(
             'INSERT IGNORE INTO favouritePlayers VALUES (?, ?);',
-            [req.params.username, req.body.playerId],
+            [+req.params.id, +req.params.playerId],
             (err, result) => {
                 if (err) throw err;
 
                 if (result.affectedRows === 0) {
                     res.status(409).send({
-                        message: `The player with id ${req.body.playerId} was already in ${req.params.username}'s favourite list`
+                        message: `The player with id ${req.body.playerId} was already in ${req.params.id}'s favourite list`
                     });
                 } else {
                     res.status(204).send();
@@ -78,17 +154,17 @@ routes.post('/:username/fav-players', async (req, res) => {
     }
 });
 
-routes.delete('/:username/fav-players', async (req, res) => {
+routes.delete('/:id/fav-players/:playerId', jwtAuthCall, (req, res) => {
     try {
         MysqlCon.query(
-            'DELETE FROM favouritePlayers WHERE username = ? AND playerId = ?;',
-            [req.params.username, req.body.playerId],
+            'DELETE FROM favouritePlayers WHERE userId = ? AND playerId = ?;',
+            [+req.params.id, +req.params.playerId],
             (err, result) => {
                 if (err) throw err;
 
                 if (result.affectedRows === 0) {
                     res.status(409).send({
-                        message: `The player with id ${req.body.playerId} was not in ${req.params.username}'s favourite list`
+                        message: `The player with id ${req.body.playerId} was not in ${req.params.id}'s favourite list`
                     });
                 } else {
                     res.status(204).send();
