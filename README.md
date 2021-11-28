@@ -8,35 +8,11 @@
 
 ElasticSearch is the core database system used in this application. However, in order to register users and keep their data, a MySQL is also used.
 
-First, pull the latest images using the commands below in termial or using any docker application:
+The project is built using `docker-compose`, therefore, in the root folder run:
 
 ```sh
-# elasticsearch image does not have a latest tag
-docker pull elasticsearch:7.14.1
-docker pull mysql
+docker-compose up 
 ```
-
-Create both containers:
-
-```sh
-# for elasticsearch
-docker run -p 9200:9200 \
-    -p 9300:9300 \
-    -e "discovery.type=single-node" \
-    --name fs-elasticsearch \
-    -d elasticsearch:7.14.1
-
-# for mysql
-# make sure no other running mysql container is blocking the port
-docker run -p 3306:3306 \
-    -e "MYSQL_ROOT_PASSWORD=root" \
-    --name fs-mysql \
-    -d mysql
-```
-
-> In order to reduce the amount of memory used by the containers, the prop `--memory` can be additionally passed when running the container.  
-> For example, limiting mysql to 1gb of memory:
-> `docker run --memory="1g" -d mysql`
 
 Check running containers with:
 
@@ -47,10 +23,31 @@ docker ps --format "table {{.Names}}\t{{.Image}}\t{{.RunningFor}}\t{{.Status}}"
 The output of the before command should look like:
 
 ```sh
-NAMES                IMAGE                  CREATED         STATUS
-fs-mysql             mysql                  2 minutes ago   Up 2 minutes
-fs-elasticsearch     elasticsearch:7.14.1   2 minutes ago   Up 2 minutes
+NAMES              IMAGE                                                  CREATED          STATUS
+fs-kibana          docker.elastic.co/kibana/kibana:7.15.2                 25 minutes ago   Up 25 minutes
+fs-mysql           mysql                                                  25 minutes ago   Up 25 minutes
+fs-elasticsearch   docker.elastic.co/elasticsearch/elasticsearch:7.15.2   25 minutes ago   Up 25 minutes
+
 ```
+
+Before starting the application, open the `fs-mysql` container an run as follows:
+
+```sh
+# enter fs-mysql
+docker exec -it fs-mysql bash
+
+# enter mysql database with root password
+mysql -u root -p
+# type root in the password promt
+
+# alter the root user to allow client connections
+ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'root';
+FLUSH PRIVILEGES;
+
+# exit the console of the container by writing exit twice
+```
+
+Applying this changes will allow the node server to securely create a mysql connection.
 
 ### Application
 
@@ -82,7 +79,7 @@ npm install <package-name> -w <workspace-name>
 npm install <package-name> --workspace=<workspace-name>
 ```
 
-## Run the application
+## Development
 
 Once the containers are up, you can run the entire full stack application by running:
 

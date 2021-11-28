@@ -1,6 +1,7 @@
-import { Client } from '@elastic/elasticsearch';
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
+
+import { Client } from '@elastic/elasticsearch';
 
 const elasticClient = new Client({ node: 'http://localhost:9200' });
 
@@ -24,11 +25,12 @@ const PlayersIndexMapping = {
                     type: 'text',
                     fields: { key: { type: 'keyword' } }
                 },
+                position: { type: 'keyword' },
                 strongFoot: { type: 'text' },
-                firstStrongFoot: { type: 'keyword' },
-                secondStrongFoot: { type: 'keyword' },
-                thirdStrongFoot: { type: 'keyword' },
-                fourthStrongFoot: { type: 'keyword' }
+                firstStrongPoint: { type: 'keyword' },
+                secondStrongPoint: { type: 'keyword' },
+                thirdStrongPoint: { type: 'keyword' },
+                fourthStrongPoint: { type: 'keyword' }
             }
         }
     }
@@ -66,19 +68,13 @@ const clearBulkErrors = (result, initial) => {
 };
 
 // On elastic client init, check if data has to be inserted
-const init = async () => {
-    try {
-        await elasticClient.indices.delete({ index: 'players' });
-    } catch (e) {}
-
+const initialize = async () => {
     const { body: exists } = await elasticClient.indices.exists({
         index: 'players'
     });
 
     if (!exists) {
-        console.log(
-            '[ELASTIC] 🟡 No players index found, initialising'
-        );
+        console.log('[ELASTIC] 🟡 No players index found, initialising');
 
         console.log('[ELASTIC] ℹ️  Creating elastic players index');
         await elasticClient.indices.create(PlayersIndexMapping);
@@ -137,17 +133,16 @@ const init = async () => {
             }
         }
     } else {
-        console.log('[ELASTIC] 🟡  players index found, initialising');
+        console.log('[ELASTIC] 🟡 players index found');
 
         const { body } = await elasticClient.search({
             index: 'players'
         });
         console.log(
-            `[ELASTIC] A total of ${body.hits.total.value} players has been found in the database.`
+            `[ELASTIC] ℹ️  A total of ${body.hits.total.value} players has been found in the database.`
         );
     }
 };
 
-init();
-
 export default elasticClient;
+export { initialize };
