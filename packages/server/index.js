@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser';
 import express from 'express';
+import cors from 'cors';
 
 import { initElastic, initMysql, playersRoutes, userRoutes } from './src';
 
@@ -15,6 +16,9 @@ Promise.all([initElastic(), initMysql()]).then(() => {
 
     App.use(bodyParser.urlencoded({ extended: false }));
     App.use(bodyParser.json());
+
+    App.use(cors());
+    App.options('*', cors());
 
     App.use('/user', userRoutes);
     App.use('/players', playersRoutes);

@@ -7,8 +7,10 @@ import { UserOutlined } from '@ant-design/icons';
 import ProfilePopoverContent from './ProfilePopoverContent';
 import { useAppContext } from '../util';
 
-const HeaderProfile = () => {
-  const { user } = useAppContext();
+const HeaderProfile = ({ onFavouritesClick }) => {
+  const {
+    user: { user }
+  } = useAppContext();
 
   const [active, setActive] = useState(false);
 
@@ -22,7 +24,7 @@ const HeaderProfile = () => {
     >
       {user && (
         <Typography.Text style={{ color: 'white', marginRight: '8px' }}>
-          {user.firstName} {user.lastName}
+          {user.name} {user.lastName}
         </Typography.Text>
       )}
 
@@ -30,8 +32,9 @@ const HeaderProfile = () => {
         trigger="click"
         visible={active}
         onVisibleChange={() => setActive((prev) => !prev)}
-        content={<ProfilePopoverContent />}
-        overlayStyle={{ padding: user ? '0' : undefined }}
+        content={
+          <ProfilePopoverContent onFavouritesClick={onFavouritesClick} />
+        }
         placement="bottomRight"
       >
         <Button style={{ borderRadius: '50%' }} icon={<UserOutlined />} />

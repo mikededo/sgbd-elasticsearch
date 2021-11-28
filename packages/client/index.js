@@ -3,6 +3,11 @@ import 'antd/dist/antd.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './src';
+import { App, AppContext } from './src';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <AppContext>
+    <App />
+  </AppContext>,
+  document.getElementById('root')
+);

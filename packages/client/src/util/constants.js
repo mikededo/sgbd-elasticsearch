@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { Tag, Typography } from 'antd';
+import { Button, Tag, Typography } from 'antd';
+
+import { StarFilled, StarOutlined } from '@ant-design/icons';
+
+import { useAppContext } from './context';
 
 export const POSITIONS = {
   1: { l: 'Goalkeeper', s: 'GK' },
@@ -41,12 +45,20 @@ export const PLAYER_TRAITS = {
   22: 'Penalty Expert'
 };
 
+export const REVERSE_PLAYER_TRAITS = Object.entries(PLAYER_TRAITS).map(
+  ([key, value]) => ({ [value]: key })
+);
+
 export const KEEPER_TRAITS = {
   23: 'Air Balls',
   24: 'Penalty Expert',
   25: 'Power shoot',
   26: 'Playmaker'
 };
+
+export const REVERSE_KEEPER_TRAITS = Object.entries(KEEPER_TRAITS).map(
+  ([key, value]) => ({ [value]: key })
+);
 
 export const COLOR_LIST = ['#ff5f32', '#ff8e39', '#ffb750', '#ffdb75'];
 
@@ -84,35 +96,83 @@ export const COUNTRY_FLAGS = {
 };
 
 // Table
-export const COLUMNS = [
+export const COLUMNS = (modal = false) => [
+  {
+    title: '',
+    dataIndex: '',
+    key: 'favourite',
+    fixed: 'left',
+    width: 64,
+    render: (_, record) => {
+      const {
+        user: { user },
+        favourites
+      } = useAppContext();
+
+      return (
+        <Button
+          type="text"
+          disabled={!user}
+          icon={
+            favourites.players.findIndex(({ id }) => id === record.id) ===
+            -1 ? (
+              <StarOutlined
+                key={`fav-${record.id}`}
+                onClick={() => favourites.toggleFavourite(record)}
+              />
+            ) : (
+              <StarFilled
+                key={`fav-${record.id}`}
+                style={{ color: '#ffdf00' }}
+                onClick={() => favourites.toggleFavourite(record, true)}
+              />
+            )
+          }
+          shape="circle"
+        />
+      );
+    }
+  },
   {
     title: 'Player name',
     dataIndex: 'fullName',
     key: 'fullName',
     fixed: 'left',
-    width: 300
+    width: modal ? 200 : 300
+  },
+  {
+    title: 'Age',
+    dataIndex: 'age',
+    key: 'age',
+    width: 175
   },
   {
     title: 'Height',
     dataIndex: 'height',
     key: 'height',
     width: 175,
-    render: (height) => <Typography>{`${height} m`}</Typography>
+    render: (height, { id }) => (
+      <Typography key={`height-${id}`}>{`${height} m`}</Typography>
+    )
   },
   {
     title: 'Weight',
     dataIndex: 'weight',
     key: 'weight',
     width: 175,
-    render: (weight) => <Typography>{`${weight} kg`}</Typography>
+    render: (weight, { id }) => (
+      <Typography key={`weight-${id}`}>{`${weight} kg`}</Typography>
+    )
   },
   {
     title: 'Country',
     dataIndex: 'country',
     key: 'country',
     width: 175,
-    render: (country) => (
-      <Typography>{`${COUNTRY_FLAGS[country]} ${country}`}</Typography>
+    render: (country, { id }) => (
+      <Typography
+        key={`country-${id}`}
+      >{`${COUNTRY_FLAGS[country]} ${country}`}</Typography>
     )
   },
   {
@@ -126,8 +186,10 @@ export const COLUMNS = [
     dataIndex: 'strongFoot',
     key: 'strongFoot',
     width: 175,
-    render: (side) => (
-      <Typography>{`${side[0].toUpperCase()}${side.slice(1)}`}</Typography>
+    render: (side, { id }) => (
+      <Typography
+        key={`strong-foot-${id}`}
+      >{`${side[0].toUpperCase()}${side.slice(1)}`}</Typography>
     )
   },
   {

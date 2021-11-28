@@ -1,45 +1,4 @@
-import React from 'react';
-
-import { Layout, Typography } from 'antd';
-
-import { Dashboard, HeaderProfile } from './components';
+import App from './App';
 import { AppContext } from './util';
 
-const { Footer, Header, Content } = Layout;
-const { Title } = Typography;
-
-const App = () => (
-  <AppContext>
-    <Layout style={{ minHeight: '100vh' }}>
-      <Header
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          backgroundColor: '#333333'
-        }}
-      >
-        <Title style={{ color: 'white', margin: 0 }} className="logo">
-          FutBase
-        </Title>
-
-        <HeaderProfile />
-      </Header>
-
-      <Content
-        style={{
-          padding: '50px',
-          paddingBottom: 0
-        }}
-      >
-        <Dashboard />
-      </Content>
-
-      <Footer style={{ textAlign: 'center' }}>
-        FutBase - All rights reserved &copy; 2021
-      </Footer>
-    </Layout>
-  </AppContext>
-);
-
-export default App;
+export { App, AppContext };

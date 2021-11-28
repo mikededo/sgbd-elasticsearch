@@ -38,6 +38,11 @@ routes.post('/login', (req, res) => {
                 return;
             }
 
+            if (!result.length) {
+                res.status(400).send(err);
+                return;
+            }
+
             const user = result[0];
 
             if (bcrypt.compareSync(body.password, user.password)) {
@@ -81,8 +86,6 @@ routes.post('/register', (req, res) => {
                 'SELECT * FROM users WHERE id = ?',
                 result.insertId,
                 (err, user) => {
-                    console.log(user);
-
                     if (err) {
                         res.status(500);
                         return;

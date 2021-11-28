@@ -1,54 +1,97 @@
 import React, { useState } from 'react';
-import { Button, Checkbox, Input, Space, Typography } from 'antd';
+
+import { Button, Form, Input, Space, Typography } from 'antd';
+import { useAppContext } from '../util';
 
 const { Title } = Typography;
 
-
 const SingInContent = () => {
-  const [login, setLogin] = useState(false);
+  const { user } = useAppContext();
+
+  const [login, setLogin] = useState(true);
+
+  const handleOnSubmit = (data) => {
+    if (login) {
+      user.login(data.email, data.password);
+    } else {
+      user.register(data.name, data.lastName, data.email, data.password);
+    }
+  };
 
   return (
     <>
       <Title level={5}>{login ? 'Log in' : 'Sign up'}</Title>
 
-      <Space
-        direction="vertical"
-        size={8}
-        style={{ width: '300px', marginBottom: login ? '8px' : '16px' }}
+      <Form
+        name="singin"
+        onFinish={handleOnSubmit}
+        autoComplete="off"
+        layout="vertical"
       >
-        {!login && (
-          <>
-            <div>
-              <Typography.Text strong>Name</Typography.Text>
-              <Input type="text" placeholder="John" />
-            </div>
+        <Space
+          direction="vertical"
+          size={8}
+          style={{ width: '300px', marginBottom: login ? '8px' : '16px' }}
+        >
+          {!login && (
+            <>
+              <Form.Item
+                label="Name"
+                name="name"
+                rules={[{ required: true, message: 'Name is required!' }]}
+                style={{ marginBottom: '0px' }}
+              >
+                <Input placeholder="John" />
+              </Form.Item>
 
-            <div>
-              <Typography.Text strong>Last name</Typography.Text>
-              <Input type="text" placeholder="Doe" />
-            </div>
-          </>
-        )}
+              <Form.Item
+                label="Last name"
+                name="lastName"
+                rules={[{ required: true, message: 'Last name is required!' }]}
+                style={{ marginBottom: '0px' }}
+              >
+                <Input placeholder="Doe" />
+              </Form.Item>
+            </>
+          )}
 
-        <div>
-          <Typography.Text strong>Email</Typography.Text>
-          <Input type="email" placeholder="john.doe@example.com" />
-        </div>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: 'Email is required!' }]}
+            style={{ marginBottom: '0px' }}
+          >
+            <Input type="email" placeholder="john.doe@example.com" />
+          </Form.Item>
 
-        <div>
-          <Typography.Text strong>Password</Typography.Text>
-          <Input type="password" placeholder="Min. 6 characters..." />
-        </div>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              { required: true, message: 'Password is required!' },
+              { min: 6, message: 'Password must be at least 6 characters!' }
+            ]}
+            style={{ marginBottom: '0px' }}
+          >
+            <Input.Password placeholder="Min. 6 characters..." />
+          </Form.Item>
+        </Space>
 
-        {login && <Checkbox>Remember me</Checkbox>}
-      </Space>
-
-      <Space style={{ alignSelf: 'flex-end' }} size={8}>
-        <Button type="text" onClick={() => setLogin((prev) => !prev)}>
-          {login ? 'Sign up' : 'Log in'}
-        </Button>
-        <Button type="primary">{login ? 'Log in' : 'Sign up'}</Button>
-      </Space>
+        <Form.Item style={{ marginBottom: 0 }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }} size={8}>
+            <Button
+              style={{ marginRight: '8px' }}
+              type="text"
+              onClick={() => setLogin((prev) => !prev)}
+            >
+              {login ? 'Sign up' : 'Log in'}
+            </Button>
+            <Button type="primary" htmlType="submit" loading={user.loading}>
+              {login ? 'Log in' : 'Sign up'}
+            </Button>
+          </div>
+        </Form.Item>
+      </Form>
     </>
   );
 };

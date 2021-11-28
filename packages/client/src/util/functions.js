@@ -1,6 +1,10 @@
 import { PLAYER_TRAITS, POSITIONS } from './constants';
 
 const getTraits = (model) => {
+  if (model.traits) {
+    return model.traits;
+  }
+
   const traits = [PLAYER_TRAITS[model.firstStrongPoint]];
 
   if (model.secondStrongPoint) {

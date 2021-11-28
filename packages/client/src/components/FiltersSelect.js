@@ -19,7 +19,7 @@ const FiltersSelect = ({ label, placeholder, tagRender, values, onChange }) => (
       allowClear
     >
       {values.map(([value, text]) => (
-        <Option value={value}>{text}</Option>
+        <Option key={value} value={value}>{text}</Option>
       ))}
     </Select>
   </>

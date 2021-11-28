@@ -14,8 +14,38 @@ const DashboardHeader = () => {
   const [filtersHeight, setFiltersHeight] = useState(null);
   const [showFilters, setShowFilters] = useState(true);
 
+  const [filters, setFilters] = useState({
+    age: { start: 14, end: 20 },
+    weight: { start: 65, end: 90 },
+    height: { start: 1.8, end: 2.1 },
+    positions: [],
+    countries: [],
+    strongFoots: [],
+    traits: []
+  });
+
+  /**
+   * @param {'age' | 'weight' | 'height'} prop
+   */
+  const handleOnSliderChange =
+    (prop) =>
+    ([start, end]) => {
+      setFilters((prev) => ({ ...prev, [prop]: { start, end } }));
+    };
+
+  /**
+   * @param {'poisitions' | 'countries' | 'strongFoots' | 'traits'} prop
+   */
+  const handleOnSelectChange = (prop) => (values) => {
+    setFilters((prev) => ({ ...prev, [prop]: values }));
+  };
+
   const handleOnFiltersClick = () => {
     setShowFilters((prev) => !prev);
+  };
+
+  const handleOnFormSubmit = (e) => {
+    e.preventDefault();
   };
 
   useEffect(() => {
@@ -23,7 +53,7 @@ const DashboardHeader = () => {
   }, []);
 
   return (
-    <>
+    <form name="player-filters" onSubmit={handleOnFormSubmit}>
       <section style={{ padding: '24px 24px 12px' }}>
         <Title level={3}>
           Search for the talent of the upcoming generation!
@@ -58,10 +88,14 @@ const DashboardHeader = () => {
         }}
       >
         <div ref={childRef} style={{ padding: '16px 24px' }}>
-          <DashboardFilters />
+          <DashboardFilters
+            filters={filters}
+            handleOnSliderChange={handleOnSliderChange}
+            handleOnSelectChange={handleOnSelectChange}
+          />
         </div>
       </section>
-    </>
+    </form>
   );
 };
 
