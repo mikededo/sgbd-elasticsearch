@@ -7,17 +7,17 @@ import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { useAppContext } from './context';
 
 export const POSITIONS = {
-  1: { l: 'Goalkeeper', s: 'GK' },
-  2: { l: 'Right back', s: 'SB' },
-  3: { l: 'Center back', s: 'CB' },
-  4: { l: 'Left back', s: 'LB' },
-  5: { l: 'Center defensive mid', s: 'CDM' },
-  6: { l: 'Midfielder', s: 'CM' },
-  7: { l: 'Right mid', s: 'RM' },
-  8: { l: 'Left mid', s: 'LM' },
-  9: { l: 'Right wing', s: 'RW' },
-  10: { l: 'Left wing', s: 'LW' },
-  11: { l: 'Striker', s: 'ST' }
+  1: { l: 'Goalkeeper', s: 'GK', color: '#23a6fd' },
+  2: { l: 'Right back', s: 'SB', color: '#2b9bf0' },
+  3: { l: 'Center back', s: 'CB', color: '#2f91e3' },
+  4: { l: 'Left back', s: 'LB', color: '#3287d5' },
+  5: { l: 'Center defensive mid', s: 'CDM', color: '#347dc8' },
+  6: { l: 'Midfielder', s: 'CM', color: '#3473bb' },
+  7: { l: 'Right mid', s: 'RM', color: '#3469ae' },
+  8: { l: 'Left mid', s: 'LM', color: '#3360a2' },
+  9: { l: 'Right wing', s: 'RW', color: '#315695' },
+  10: { l: 'Left wing', s: 'LW', color: '#2f4d88' },
+  11: { l: 'Striker', s: 'ST', color: '#2c457c' }
 };
 
 export const PLAYER_TRAITS = {
@@ -60,7 +60,7 @@ export const REVERSE_KEEPER_TRAITS = Object.entries(KEEPER_TRAITS).map(
   ([key, value]) => ({ [value]: key })
 );
 
-export const COLOR_LIST = ['#ff5f32', '#ff8e39', '#ffb750', '#ffdb75'];
+export const COLOR_LIST = ['#cc2222', '#d8591a', '#e0831c', '#e3aa30'];
 
 export const COUNTRY_FLAGS = {
   Brazil: '🇧🇷',
@@ -141,6 +141,23 @@ export const COLUMNS = (modal = false) => [
     width: modal ? 200 : 300
   },
   {
+    title: 'Position',
+    dataIndex: 'position',
+    key: 'position',
+    width: 225,
+    render: ({ l, s, color }, { id }) => (
+      <Tag
+        key={`position-${id}`}
+        color={`${color}20`}
+        style={{
+          color,
+          border: `1px solid ${color}`,
+          margin: '4px'
+        }}
+      >{`${l} (${s})`}</Tag>
+    )
+  },
+  {
     title: 'Age',
     dataIndex: 'age',
     key: 'age',
@@ -201,9 +218,9 @@ export const COLUMNS = (modal = false) => [
       traits.map((trait, i) => (
         <Tag
           key={`${trait}-${i}`}
-          color={`${COLOR_LIST[i]}55`}
+          color={`${COLOR_LIST[i % COLOR_LIST.length]}20`}
           style={{
-            color: '#595959',
+            color: COLOR_LIST[i],
             border: `1px solid ${COLOR_LIST[i]}`,
             margin: '4px'
           }}

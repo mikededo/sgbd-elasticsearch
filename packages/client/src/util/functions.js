@@ -1,5 +1,8 @@
 import { PLAYER_TRAITS, POSITIONS } from './constants';
 
+const getPosition = (position) =>
+  Number.isInteger(position) ? POSITIONS[position] : position;
+
 const getTraits = (model) => {
   if (model.traits) {
     return model.traits;
@@ -26,11 +29,12 @@ const getTraits = (model) => {
 export const dataParser = (data) => ({
   id: data.id,
   fullName: data.fullName,
+  age: data.age,
   height: data.height,
   weight: data.weight,
   country: data.country,
   team: data.team,
   strongFoot: data.strongFoot,
-  position: POSITIONS[data.position],
+  position: getPosition(data.position),
   traits: getTraits(data)
 });

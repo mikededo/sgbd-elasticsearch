@@ -24,7 +24,7 @@ const DashboardFilters = ({
       </Title>
     </Col>
 
-    <Col span={8}>
+    <Col span={6} sm={8} xs={12}>
       <Title level={5}>Player age</Title>
 
       <Slider
@@ -43,7 +43,7 @@ const DashboardFilters = ({
       />
     </Col>
 
-    <Col span={8}>
+    <Col span={6} sm={8} xs={12}>
       <Title level={5}>Player weight</Title>
 
       <Slider
@@ -65,7 +65,7 @@ const DashboardFilters = ({
       />
     </Col>
 
-    <Col span={8}>
+    <Col span={6} sm={8} xs={12}>
       <Title level={5}>Player height</Title>
 
       <Slider

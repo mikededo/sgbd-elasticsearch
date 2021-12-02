@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 
-import { userApi } from './axios';
+import { playersApi, userApi } from './axios';
 
 const Ctx = createContext();
 Ctx.displayName = 'Application Context';
@@ -24,6 +24,8 @@ const loadContext = () => {
 
   const [user, setUser] = useState(null);
   const [fav, setFavs] = useState([]);
+  const [players, setPlayers] = useState([]);
+  const [totalPlayers, setTotalPlayers] = useState(0);
 
   const favouritesHelper = (id, userToken) =>
     userApi.get(`${id}/fav-players`, {
@@ -115,8 +117,7 @@ const loadContext = () => {
           });
           setFavLoading(false);
         })
-        .catch((e) => {
-          console.log(e);
+        .catch(() => {
           setFavLoading(false);
         });
     } else {
@@ -132,11 +133,28 @@ const loadContext = () => {
           setFavs((prev) => [...prev, player]);
           setFavLoading(false);
         })
-        .catch((e) => {
-          console.error(e);
+        .catch(() => {
           setFavLoading(false);
         });
     }
+  };
+
+  const getPlayers = (from, limit, count = false) => {
+    setSearchLoading(true);
+
+    return playersApi
+      .get('', { params: { from, limit, count } })
+      .then(({ data }) => {
+        setPlayers(data.players);
+
+        if (count) {
+          setTotalPlayers(data.total);
+        }
+
+        setSearchLoading(false);
+
+        return data?.total;
+      });
   };
 
   return {
@@ -154,7 +172,10 @@ const loadContext = () => {
       toggleFavourite
     },
     search: {
-      loading: searchLoading
+      loading: searchLoading,
+      result: players,
+      total: totalPlayers,
+      get: getPlayers
     }
   };
 };

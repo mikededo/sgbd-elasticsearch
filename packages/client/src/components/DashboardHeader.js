@@ -12,7 +12,7 @@ const DashboardHeader = () => {
   const childRef = useRef(null);
 
   const [filtersHeight, setFiltersHeight] = useState(null);
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
 
   const [filters, setFilters] = useState({
     age: { start: 14, end: 20 },
