@@ -14,6 +14,11 @@ const HeaderProfile = ({ onFavouritesClick }) => {
 
   const [active, setActive] = useState(false);
 
+  const handleOnFavouritesClick = () => {
+    setActive(false);
+    onFavouritesClick();
+  }
+
   return (
     <div
       style={{
@@ -33,7 +38,7 @@ const HeaderProfile = ({ onFavouritesClick }) => {
         visible={active}
         onVisibleChange={() => setActive((prev) => !prev)}
         content={
-          <ProfilePopoverContent onFavouritesClick={onFavouritesClick} />
+          <ProfilePopoverContent onFavouritesClick={handleOnFavouritesClick} />
         }
         placement="bottomRight"
       >

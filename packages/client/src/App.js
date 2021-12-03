@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Layout, Modal, Typography } from 'antd';
+import { Layout, Modal, notification, Typography } from 'antd';
 
 import { Dashboard, HeaderProfile, Table } from './components';
 import { COLUMNS, useAppContext } from './util';
@@ -10,6 +10,7 @@ const { Title } = Typography;
 
 const App = () => {
   const {
+    error: { error, clearError },
     favourites: { players, loading }
   } = useAppContext();
 
@@ -18,6 +19,18 @@ const App = () => {
   const handleOnFavouritesClick = () => {
     setShowFav(true);
   };
+
+  useEffect(() => {
+    if (error) {
+      notification.error({
+        placement: 'bottomRight',
+        message: 'An error ocurred!',
+        description: error,
+        onClose: clearError,
+        duration: 2.5
+      });
+    }
+  }, [error]);
 
   return (
     <>

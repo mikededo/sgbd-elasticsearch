@@ -20,6 +20,8 @@ const loadContext = () => {
   const [favLoading, setFavLoading] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
 
+  const [error, setError] = useState(null);
+
   const [token, setToken] = useState(null);
 
   const [user, setUser] = useState(null);
@@ -56,7 +58,7 @@ const loadContext = () => {
         setUserLoading(false);
       })
       .catch(() => {
-        console.error('error on login');
+        setError('An error ocurred while login in!');
         setUserLoading(false);
       });
   };
@@ -72,7 +74,7 @@ const loadContext = () => {
         setUserLoading(false);
       })
       .catch(() => {
-        console.error('error on register');
+        setError('An error ocurred while registering!');
         setUserLoading(false);
       });
   };
@@ -89,8 +91,8 @@ const loadContext = () => {
         setFavs(data);
         setFavLoading(false);
       })
-      .catch((e) => {
-        console.error(e);
+      .catch(() => {
+        setError('An error ocurred while fetching favourite players');
         setFavLoading(false);
       });
   };
@@ -118,6 +120,9 @@ const loadContext = () => {
           setFavLoading(false);
         })
         .catch(() => {
+          setError(
+            'An error ocurred while removing the player! Try again later...'
+          );
           setFavLoading(false);
         });
     } else {
@@ -134,30 +139,39 @@ const loadContext = () => {
           setFavLoading(false);
         })
         .catch(() => {
+          setError(
+            'An error ocurred while adding the player! Try again later...'
+          );
           setFavLoading(false);
         });
     }
   };
 
-  const getPlayers = (from, limit, count = false) => {
+  const getPlayers = async (from, limit, count = false) => {
     setSearchLoading(true);
 
-    return playersApi
-      .get('', { params: { from, limit, count } })
-      .then(({ data }) => {
-        setPlayers(data.players);
-
-        if (count) {
-          setTotalPlayers(data.total);
-        }
-
-        setSearchLoading(false);
-
-        return data?.total;
+    try {
+      const { data } = await playersApi.get('', {
+        params: { from, limit, count }
       });
+      setPlayers(data.players);
+
+      if (count) {
+        setTotalPlayers(data.total);
+      }
+
+      setSearchLoading(false);
+      return data?.total;
+    } catch (e) {
+      setSearchLoading(false);
+      setError('Server is now unavailable! Come back later!');
+
+      return undefined;
+    }
   };
 
   return {
+    error: { error, clearError: () => setError(null) },
     user: {
       user,
       loading: userLoading,
