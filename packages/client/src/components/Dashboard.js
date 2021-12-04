@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { COLUMNS, useAppContext } from '../util';
+import { COLUMNS, INITIAL_FILTERS, useAppContext } from '../util';
 import DashboardHeader from './DashboardHeader';
 import Table from './Table';
 
@@ -17,20 +17,65 @@ const Dashboard = () => {
     style: { marginRight: 24 },
     pageSizeOptions: [50, 100]
   });
+  const [filters, setFilters] = useState(INITIAL_FILTERS);
+  const [prevSearch, setPrevSearch] = useState(null);
+
+  const getHelper = (pageConfig, search = null) => {
+    const { current, pageSize } = pageConfig;
+    const searchValue = search ?? prevSearch;
+
+    if (
+      JSON.stringify(INITIAL_FILTERS) === JSON.stringify(filters) &&
+      !searchValue
+    ) {
+      get({
+        from: (current - 1) * pageSize,
+        limit: pageSize,
+        count: true
+      }).then((total) => {
+        setPrevSearch(null);
+        setPagination((prev) => ({ ...prev, total }));
+      });
+    } else {
+      get({
+        from: (current - 1) * pageSize,
+        limit: pageSize,
+        filters: { ...filters, search: searchValue }
+      }).then((total) => {
+        setPrevSearch(search);
+        setPagination((prev) => ({ ...prev, total }));
+      });
+    }
+  };
+
+  /**
+   * @param {'age' | 'weight' | 'height'} prop
+   */
+  const handleOnSliderChange =
+    (prop) =>
+    ([start, end]) => {
+      setFilters((prev) => ({ ...prev, [prop]: { start, end } }));
+    };
+
+  const handleOnSelectChange = (prop) => (values) => {
+    setFilters((prev) => ({ ...prev, [prop]: values }));
+  };
+
+  const handleOnApplyFilters = (search) => {
+    getHelper(pagination, search);
+  };
 
   /**
    *
    * @param {import('antd').PaginationProps} changes
    */
   const handleOnTableChange = (changes) => {
-    const { current, pageSize } = changes;
-
     setPagination((prev) => ({ ...prev, ...changes }));
-    get((current - 1) * pageSize, pageSize);
+    getHelper(changes);
   };
 
   useEffect(() => {
-    get(0, pagination.pageSize, true).then((total) => {
+    get({ from: 0, limit: pagination.pageSize, count: true }).then((total) => {
       setPagination((prev) => ({ ...prev, total }));
     });
   }, []);
@@ -45,7 +90,12 @@ const Dashboard = () => {
         borderRadius: '4px'
       }}
     >
-      <DashboardHeader />
+      <DashboardHeader
+        filters={filters}
+        onApplyFilters={handleOnApplyFilters}
+        onSliderChange={handleOnSliderChange}
+        onSelectChange={handleOnSelectChange}
+      />
 
       <section style={{ height: '100%' }}>
         <Table

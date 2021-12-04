@@ -2,6 +2,27 @@ import React, { createContext, useContext, useState } from 'react';
 
 import { playersApi, userApi } from './axios';
 
+/**
+ * @typedef GetPlayersResult
+ * @property {object[]} players
+ * @property {number | undefined} total
+ */
+
+export const INITIAL_FILTERS = {
+  search: null,
+  age: { start: 14, end: 20 },
+  weight: { start: 65, end: 90 },
+  height: { start: 1.6, end: 2.1 },
+  positions: [],
+  countries: [],
+  strongFoots: [],
+  firstStrongPoints: [],
+  secondStrongPoints: [],
+  thirdStrongPoints: [],
+  fourthStrongPoints: [],
+  traits: []
+};
+
 const Ctx = createContext();
 Ctx.displayName = 'Application Context';
 
@@ -33,6 +54,42 @@ const loadContext = () => {
     userApi.get(`${id}/fav-players`, {
       headers: { Authorization: `Bearer ${userToken}` }
     });
+
+  const parseRangeFilter = (original, current) =>
+    Object.entries(current).reduce(
+      (prev, [k, v]) => (original[k] !== v ? { ...prev, [k]: v } : prev),
+      {}
+    );
+
+  const parseFilters = (filters) => {
+    const fullName = filters.search ? { fullName: filters.search } : {};
+
+    const rangeFilters = Object.entries({
+      age: parseRangeFilter(INITIAL_FILTERS.age, filters.age),
+      height: parseRangeFilter(INITIAL_FILTERS.height, filters.height),
+      weight: parseRangeFilter(INITIAL_FILTERS.weight, filters.weight)
+    }).reduce(
+      (result, [k, v]) =>
+        Object.keys(v).length === 0 ? result : { ...result, [k]: v },
+      {}
+    );
+
+    const arrayFilters = Object.entries({
+      positions: filters.positions,
+      countries: filters.countries,
+      strongFoots: filters.strongFoots,
+      firstStrongPoints: filters.firstStrongPoints,
+      secondStrongPoints: filters.secondStrongPoints,
+      thirdStrongPoints: filters.thirdStrongPoints,
+      fourthStrongPoints: filters.fourthStrongPoints,
+      traits: filters.traits
+    }).reduce(
+      (result, [k, v]) => (v.length === 0 ? result : { ...result, [k]: v }),
+      {}
+    );
+
+    return { ...fullName, ...rangeFilters, ...arrayFilters };
+  };
 
   /**
    * @param {string} email
@@ -147,16 +204,39 @@ const loadContext = () => {
     }
   };
 
-  const getPlayers = async (from, limit, count = false) => {
+  const getPlayers = async ({ from, limit, count = false, filters }) => {
     setSearchLoading(true);
 
+    /** @type {GetPlayersResult} */
+    let data = {};
+
     try {
-      const { data } = await playersApi.get('', {
-        params: { from, limit, count }
-      });
+      if (filters) {
+        // Since pasing filters would be a computation in the server,
+        // http docs states that POST method should be used on
+        // such computations.
+        data = (
+          await playersApi.post(
+            '',
+            { filters: parseFilters(filters) },
+            {
+              // In this case, count has to be sent, in order to know how many
+              // players are filtered
+              params: { from, limit, count: true }
+            }
+          )
+        ).data;
+      } else {
+        data = (
+          await playersApi.get('', {
+            params: { from, limit, count }
+          })
+        ).data;
+      }
+
       setPlayers(data.players);
 
-      if (count) {
+      if (data.total) {
         setTotalPlayers(data.total);
       }
 

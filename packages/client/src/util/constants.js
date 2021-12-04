@@ -7,16 +7,17 @@ import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { useAppContext } from './context';
 
 export const POSITIONS = {
-  1: { l: 'Goalkeeper', s: 'GK', color: '#23a6fd' },
-  2: { l: 'Right back', s: 'SB', color: '#2b9bf0' },
-  3: { l: 'Center back', s: 'CB', color: '#2f91e3' },
-  4: { l: 'Left back', s: 'LB', color: '#3287d5' },
-  5: { l: 'Center defensive mid', s: 'CDM', color: '#347dc8' },
-  6: { l: 'Midfielder', s: 'CM', color: '#3473bb' },
-  7: { l: 'Right mid', s: 'RM', color: '#3469ae' },
-  8: { l: 'Left mid', s: 'LM', color: '#3360a2' },
-  9: { l: 'Right wing', s: 'RW', color: '#315695' },
-  10: { l: 'Left wing', s: 'LW', color: '#2f4d88' },
+  0: { l: 'Goalkeeper', s: 'GK', color: '#23a6fd' },
+  1: { l: 'Right back', s: 'SB', color: '#2a9cf1' },
+  2: { l: 'Center back', s: 'CB', color: '#2e93e5' },
+  3: { l: 'Left back', s: 'LB', color: '#318ad9' },
+  4: { l: 'Center defensive mid', s: 'CDM', color: '#3381cd' },
+  5: { l: 'Midfielder', s: 'CM', color: '#3478c1' },
+  6: { l: 'Center Attacking Mid', s: 'CAM', color: '#346fb5' },
+  7: { l: 'Right mid', s: 'RM', color: '#3466aa' },
+  8: { l: 'Left mid', s: 'LM', color: '#325e9e' },
+  9: { l: 'Right wing', s: 'RW', color: '#315593' },
+  10: { l: 'Left wing', s: 'LW', color: '#2f4d87' },
   11: { l: 'Striker', s: 'ST', color: '#2c457c' }
 };
 

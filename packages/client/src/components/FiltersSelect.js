@@ -6,7 +6,14 @@ import PropTypes from 'prop-types';
 const { Title } = Typography;
 const { Option } = Select;
 
-const FiltersSelect = ({ label, placeholder, tagRender, values, onChange }) => (
+const FiltersSelect = ({
+  label,
+  disabled,
+  placeholder,
+  tagRender,
+  values,
+  onChange
+}) => (
   <>
     <Title level={5}>{label}</Title>
 
@@ -16,10 +23,13 @@ const FiltersSelect = ({ label, placeholder, tagRender, values, onChange }) => (
       style={{ width: '100%' }}
       onChange={onChange}
       tagRender={tagRender}
+      disabled={disabled}
       allowClear
     >
       {values.map(([value, text]) => (
-        <Option key={value} value={value}>{text}</Option>
+        <Option key={value} value={value}>
+          {text}
+        </Option>
       ))}
     </Select>
   </>
@@ -27,6 +37,7 @@ const FiltersSelect = ({ label, placeholder, tagRender, values, onChange }) => (
 
 FiltersSelect.propTypes = {
   label: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
   placeholder: PropTypes.string,
   tagRender: PropTypes.func,
   values: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
@@ -34,6 +45,7 @@ FiltersSelect.propTypes = {
 };
 
 FiltersSelect.defaultProps = {
+  disabled: false,
   placeholder: null,
   tagRender: null,
   onChange: null

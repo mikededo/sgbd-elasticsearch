@@ -6,17 +6,18 @@ import {
   PLAYER_TRAITS,
   POSITIONS
 } from './constants';
+import AppContext, { useAppContext, INITIAL_FILTERS } from './context';
 import { dataParser } from './functions';
-import AppContext, { useAppContext } from './context';
 
 export {
   AppContext,
-  useAppContext,
   COLOR_LIST,
   COLUMNS,
   COUNTRY_FLAGS,
   dataParser,
+  INITIAL_FILTERS,
   KEEPER_TRAITS,
   PLAYER_TRAITS,
-  POSITIONS
+  POSITIONS,
+  useAppContext
 };

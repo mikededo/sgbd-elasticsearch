@@ -1,4 +1,4 @@
-import { PLAYER_TRAITS, POSITIONS } from './constants';
+import { KEEPER_TRAITS, PLAYER_TRAITS, POSITIONS } from './constants';
 
 const getPosition = (position) =>
   Number.isInteger(position) ? POSITIONS[position] : position;
@@ -8,16 +8,22 @@ const getTraits = (model) => {
     return model.traits;
   }
 
-  const traits = [PLAYER_TRAITS[model.firstStrongPoint]];
+  // If player is a keeper
+  const TRAITS =
+    model.position === 0 || model.position?.s === 'GK'
+      ? KEEPER_TRAITS
+      : PLAYER_TRAITS;
+
+  const traits = [TRAITS[model.firstStrongPoint]];
 
   if (model.secondStrongPoint) {
-    traits.push(PLAYER_TRAITS[model.secondStrongPoint]);
+    traits.push(TRAITS[model.secondStrongPoint]);
 
     if (model.thirdStrongPoint) {
-      traits.push(PLAYER_TRAITS[model.thirdStrongPoint]);
+      traits.push(TRAITS[model.thirdStrongPoint]);
 
       if (model.fourthStrongPoint) {
-        traits.push(PLAYER_TRAITS[model.fourthStrongPoint]);
+        traits.push(TRAITS[model.fourthStrongPoint]);
       }
     }
   }
