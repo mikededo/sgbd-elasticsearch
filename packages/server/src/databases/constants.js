@@ -49,6 +49,6 @@ export const queries = {
         'INSERT INTO',
         database.tables[0],
         '(name, lastName, email, password)',
-        'VALUES ( "Futbase", "Admin", "admin@futbase.com", "adminadmin") ON DUPLICATE KEY UPDATE username = "admin"; '
+        'VALUES ("Futbase", "Admin", "admin@futbase.com", "adminadmin") ON DUPLICATE KEY IGNORE '
     ].join(' ')
 };
