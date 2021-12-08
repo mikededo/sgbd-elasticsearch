@@ -44,11 +44,5 @@ export const queries = {
         'CONSTRAINT fk_favouritePlayers_user',
         'FOREIGN KEY (userId)',
         'REFERENCES users (id));'
-    ].join(' '),
-    insertAdminUser: [
-        'INSERT INTO',
-        database.tables[0],
-        '(name, lastName, email, password)',
-        'VALUES ("Futbase", "Admin", "admin@futbase.com", "adminadmin") ON DUPLICATE KEY IGNORE '
     ].join(' ')
 };

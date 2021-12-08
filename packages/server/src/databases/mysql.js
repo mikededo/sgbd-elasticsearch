@@ -11,8 +11,7 @@ const createDatabase = () =>
             queries.useDatabase,
             queries.createUsersTable,
             queries.createUsersIndex,
-            queries.createFavouritePlayersTable,
-            queries.insertAdminUser
+            queries.createFavouritePlayersTable
         ].join(''),
         (err) => {
             if (err) {
@@ -55,8 +54,7 @@ const dropAndCreateDatabase = () =>
             queries.useDatabase,
             queries.createUsersTable,
             queries.createUsersIndex,
-            queries.createFavouritePlayersTable,
-            queries.insertAdminUser
+            queries.createFavouritePlayersTable
         ].join(''),
         (err) => {
             if (err) {

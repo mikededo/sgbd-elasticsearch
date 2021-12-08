@@ -10,7 +10,7 @@ import { playersApi, userApi } from './axios';
 
 export const INITIAL_FILTERS = {
   search: null,
-  age: { start: 14, end: 20 },
+  age: { start: 14, end: 21 },
   weight: { start: 65, end: 90 },
   height: { start: 1.6, end: 2.1 },
   positions: [],

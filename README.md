@@ -1,4 +1,4 @@
-# Footbal Scouting
+# Football Scouting
 
 ![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)
 
@@ -11,7 +11,7 @@ ElasticSearch is the core database system used in this application. However, in 
 The project is built using `docker-compose`, therefore, in the root folder run:
 
 ```sh
-docker-compose up 
+docker-compose up -d
 ```
 
 Check running containers with:
@@ -30,7 +30,7 @@ fs-elasticsearch   docker.elastic.co/elasticsearch/elasticsearch:7.15.2   25 min
 
 ```
 
-Before starting the application, open the `fs-mysql` container an run as follows:
+Before starting the application, open the `fs-mysql` container and run as follows:
 
 ```sh
 # enter fs-mysql
