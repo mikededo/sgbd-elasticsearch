@@ -29,7 +29,7 @@ routes.get('/', async (req, res) => {
     });
 });
 
-const mustFromFilters = (filters) => {
+const rangeQueriesFromFilters = (filters) => {
     const must = Object.entries({
         age: filters.age,
         height: filters.height,
@@ -93,22 +93,22 @@ routes.post('/', async (req, res) => {
     const should = shouldFromFilters(filters);
 
     const result = await ElasticClient.search({
-        index: 'players',
-        from,
-        size: limit,
-        body: {
-            query: {
-                bool: {
-                    must: mustFromFilters(filters),
-                    should,
-                    minimum_should_match: should.length ? 1 : 0,
-                    filter: [
-                        ...filterFromFilters(filters),
-                        ...fullNameFromFilters(filters)
-                    ]
-                }
-            }
+      index: 'players',
+      from,
+      size: limit,
+      body: {
+        query: {
+          bool: {
+            must: fullNameFromFilters(filters),
+            should,
+            minimum_should_match: should.length ? 1 : 0,
+            filter: [
+              ...rangeQueriesFromFilters(filters),
+              ...filterFromFilters(filters)
+            ]
+          }
         }
+      }
     });
 
     res.status(200).send({
